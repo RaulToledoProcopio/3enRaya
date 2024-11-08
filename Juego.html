@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tres en Raya - Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+20&display=swap" rel="stylesheet">
+
+    <style>
+                html,
+        body {
+            height: 100%; /* Establece la altura del cuerpo y el HTML al 100% de la altura de la ventana */
+        }
+
+        body {
+            margin: 0; /* Elimina los márgenes */
+            padding: 0; /* Elimina el relleno */
+            font-family: "Jersey 20", sans-serif; /* Establece la fuente */
+            text-align: center; /* Alinea el texto al centro */
+            background-image: url("./imagenes/Fondo.gif"); /* Establece la imagen de fondo */
+            background-size: cover; /* Ajusta el tamaño de la imagen de fondo */
+            background-position: center; /* Posiciona la imagen de fondo en el centro */
+            height: 100vh; /* Establece la altura del cuerpo al 100% de la altura de la ventana */
+            display: flex; /* Usa flexbox para el diseño */
+            justify-content: center; /* Centra horizontalmente los elementos */
+            align-items: center; /* Centra verticalmente los elementos */
+        }
+
+
+        /* Estilo para los botones */
+
+        .boton {
+            background-color: #4CAF50; /* Color de fondo */
+            color: white; /* Color del texto */
+            border: none; /* Sin borde */
+            padding: 15px 25px; /* Espacio interno */
+            font-size: 1.2em; /* Tamaño del texto */
+            border-radius: 25px; /* Bordes redondeados */
+            cursor: pointer; /* Cursor al pasar por encima */
+            transition: background-color 0.3s ease; /* Transición suave */
+            margin-top: 20px; /* Espacio superior */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombreado suave */
+        }
+
+        .boton:hover {
+            background-color: #45a049; /* Cambia el color de fondo al pasar el cursor sobre el botón */
+        }
+
+        h1 {
+            color: #ffffff; /* Establece el color del texto */
+            font-size: 50px; /* Establece el tamaño de fuente a 50px */
+            margin-bottom: 25px; /* Agrega un margen inferior de 25px */
+        }
+
+        .container {
+            text-align: center; /* Centra el contenido horizontalmente */
+            margin-top: 50px; /* Agrega un margen superior de 50px */
+            position: relative; /* Establece la posición relativa */
+        }
+
+        .jugador {
+            position: absolute; /* Establece la posición absoluta */
+            top: 50%; /* Coloca el elemento en la mitad superior del contenedor */
+            transform: translateY(-50%); /* Centra verticalmente el elemento */
+        }
+
+        .jugadorX {
+            left: -100px; /* Desplaza el jugador X hacia la izquierda */
+        }
+
+        .jugadorO {
+            right: -100px; /* Desplaza el jugador O hacia la derecha */
+        }
+
+        .estado {
+            font-size: 30px; /* Tamaño de la fuente para el estado */
+            font-family: "Jersey 20", sans-serif; /* Fuente utilizada */
+            margin-bottom: 25px; /* Margen inferior de 25px */
+            color: #ffffff; /* Color del texto */
+        }
+
+        .tablero {
+            display: inline-grid; /* Utiliza una cuadrícula en línea */
+            grid-template-columns: repeat(3, 100px); /* Tres columnas de 100px cada una */
+            grid-template-rows: repeat(3, 100px); /* Tres filas de 100px cada una */
+            gap: 5px; /* Espacio de 5px entre las celdas */
+            margin-bottom: 20px; /* Margen inferior de 20px */
+            background-color: #2c3e50; /* Color de fondo del tablero */
+            padding: 10px; /* Espaciado interior de 10px */
+            border-radius: 10px; /* Bordes redondeados de 10px */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra suave alrededor del tablero */
+            position: relative; /* Posición relativa del tablero */
+        }
+
+        .celda {
+            width: 100px; /* Ancho de la celda */
+            height: 100px; /* Altura de la celda */
+            display: flex; /* Utiliza flexbox para alinear el contenido */
+            justify-content: center; /* Centra el contenido horizontalmente */
+            align-items: center; /* Centra el contenido verticalmente */
+            cursor: pointer; /* Cambia el cursor a un puntero al pasar por encima */
+            background-color: #a5a5a5; /* Color de fondo de la celda */
+            transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+            position: relative; /* Posición relativa de la celda */
+        }
+
+        .celda:hover {
+            background-color: #d5dbde; /* Cambia el color de fondo al pasar el cursor sobre la celda */
+        }
+
+        .imagen {
+            width: 80px; /* Ancho de la imagen */
+            height: 80px; /* Altura de la imagen */
+            position: absolute; /* Posición absoluta de la imagen */
+            top: 50%; /* Coloca la imagen en el 50% superior de la celda */
+            left: 50%; /* Coloca la imagen en el 50% izquierdo de la celda */
+            transform: translate(-50%, -50%); /* Centra la imagen dentro de la celda */
+        }
+
+        .imagenJugador {
+            width: 150px; /* Ancho de la imagen del jugador */
+            height: 150px; /* Altura de la imagen del jugador */
+            position: absolute; /* Posición absoluta de la imagen */
+            top: 50%; /* Coloca la imagen en el 50% superior del contenedor */
+            left: 50%; /* Coloca la imagen en el 50% izquierdo del contenedor */
+            transform: translate(-50%, -50%); /* Centra la imagen dentro del contenedor */
+            border-radius: 50%; /* Bordes redondeados para crear un círculo */
+        }
+
+        .estado {
+            font-size: 1.5em; /* Tamaño de la fuente para el estado */
+            font-weight: bold; /* Fuente en negrita */
+            margin-bottom: 20px; /* Margen inferior de 20px */
+        }
+
+        .ganador {
+            color: green; /* Color del texto para el estado de ganador */
+        }
+
+        .empate {
+            color: blue; /* Color del texto para el estado de empate */
+        }
+
+        .marcador {
+            font-size: 50px; /* Tamaño de la fuente */
+            color: #ffffff; /* Color del texto */
+            font-family: 'Courier New', Courier, monospace; /* Fuente utilizada */
+            margin: 10px; /* Espaciado alrededor del marcador */
+            padding: 15px; /* Relleno dentro del marcador */
+            background-image: url("./imagenes/recuadro.gif"); /* Color de fondo */
+            border-radius: 25px; /* Bordes redondeados */
+            position: absolute; /* Posición absoluta para colocar los marcadores */
+            top: 20px; /* Coloca el marcador 20px desde la parte superior */
+            z-index: 1000; /* Asegura que el marcador esté por encima de otros elementos */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra suave */
+        }
+
+        .jugadorX .marcador {
+            left: -250px; /* Coloca el marcador de X */
+            top: -250px; /* Coloca el marcador de X */
+        }
+
+        .jugadorO .marcador {
+            right: -250px; /* Coloca el marcador de O */
+            top: -250px; /* Coloca el marcador de X */
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <div class="container"> <!-- Contenedor principal centrado -->
+        <div id="marcadorX" class="marcador">0</div> <!-- Marcador para el jugador X -->
+        <div class="jugador jugadorX"> <!-- Contenedor para el jugador X -->
+            <img src="" alt="Jugador X" id="imagenJugadorX" class="imagenJugador"> <!-- Imagen del jugador X -->
+        </div>
+        <h1>Tres en Raya</h1> <!-- Título del juego -->
+        <div id="tablero" class="tablero"> <!-- Contenedor del tablero del juego -->
+            <div class="celda" data-indice-celda="0"></div> <!-- Celda del tablero con índice 0 -->
+            <div class="celda" data-indice-celda="1"></div> <!-- Celda del tablero con índice 1 -->
+            <div class="celda" data-indice-celda="2"></div> <!-- Celda del tablero con índice 2 -->
+            <div class="celda" data-indice-celda="3"></div> <!-- Celda del tablero con índice 3 -->
+            <div class="celda" data-indice-celda="4"></div> <!-- Celda del tablero con índice 4 -->
+            <div class="celda" data-indice-celda="5"></div> <!-- Celda del tablero con índice 5 -->
+            <div class="celda" data-indice-celda="6"></div> <!-- Celda del tablero con índice 6 -->
+            <div class="celda" data-indice-celda="7"></div> <!-- Celda del tablero con índice 7 -->
+            <div class="celda" data-indice-celda="8"></div> <!-- Celda del tablero con índice 8 -->
+        </div>
+        <div class="jugador jugadorO"> <!-- Contenedor para el jugador O -->
+            <img src="" alt="Jugador O" id="imagenJugadorO" class="imagenJugador"> <!-- Imagen del jugador O -->
+            <div id="marcadorO" class="marcador">0</div> <!-- Marcador para el jugador O -->
+        </div>
+
+        <audio id="empate_audio" src="./sonidos/Empate.mp3"></audio> <!-- Audio para sonido de empate -->
+        <audio id="seleccionarX_audio" src="./sonidos/X.mp3"></audio> <!-- Audio para sonido al seleccionar X -->
+        <audio id="seleccionarO_audio" src="./sonidos/O.mp3"></audio> <!-- Audio para sonido al seleccionar O -->
+    
+        <!-- Estado del juego (quién gana o si hay empate) -->
+        <div id="estado" class="estado"></div> <!-- Contenedor para el estado del juego -->
+    
+        <!-- Botón para reiniciar el juego -->
+        <button id="reiniciarBtn" class="boton">Reiniciar Juego</button> <!-- Botón para reiniciar el juego -->
+    
+        <!-- Botón para volver a la selección de personajes -->
+        <button id="volverBtn" class="boton">Volver a la selección de personajes</button> <!-- Botón para volver a la selección de personajes -->
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Obtener los parámetros de la URL
+            const urlParams = new URLSearchParams(window.location.search); // Crear una instancia de URLSearchParams para obtener los parámetros de la URL
+            const jugadorX = decodeURIComponent(urlParams.get('jugadorX')); // Obtener y decodificar el parámetro 'jugadorX' de la URL
+            const jugadorO = decodeURIComponent(urlParams.get('jugadorO')); // Obtener y decodificar el parámetro 'jugadorO' de la URL
+
+            // Establecer las imágenes de los jugadores
+            document.getElementById('imagenJugadorX').src = jugadorX; // Establecer la fuente de la imagen del jugador X
+            document.getElementById('imagenJugadorO').src = jugadorO; // Establecer la fuente de la imagen del jugador O
+
+            // Definir los sonidos correspondientes a cada imagen de jugador
+            const sonidos = {
+                './imagenes/venidapormi.jpg': './sonidos/venidapormiwin.mp3', // Asignar el sonido de victoria correspondiente a la imagen 'venidapormi.jpg'
+                './imagenes/churumbel.jpg': './sonidos/churumbelwin.mp3', // Asignar el sonido de victoria correspondiente a la imagen 'churumbel.jpg'
+                './imagenes/pimpam.jpg': './sonidos/pimpamwin.mp3', // Asignar el sonido de victoria correspondiente a la imagen 'pimpam.jpg'
+                './imagenes/jovani.jpg': './sonidos/jovaniwin.mp3', // Asignar el sonido de victoria correspondiente a la imagen 'jovani.jpg'
+                './imagenes/skippy.jpg': './sonidos/skippywin.mp3' // Asignar el sonido de victoria correspondiente a la imagen 'skippy.jpg'
+            };
+
+            // Obtener las rutas de las imágenes de los jugadores
+            const imagenJugadorX = jugadorX; // Ruta de la imagen del jugador X
+            const imagenJugadorO = jugadorO; // Ruta de la imagen del jugador O
+
+
+            // Obtener los sonidos correspondientes a las imágenes de los jugadores
+            const sonidoGanadorX = sonidos[imagenJugadorX]; // Asignar el sonido de victoria para el jugador X en base a la imagen que usa
+            const sonidoGanadorO = sonidos[imagenJugadorO]; // Asignar el sonido de victoria para el jugador O en base a la imagen que usa
+
+            const tablero = document.getElementById('tablero'); // Obtener el elemento del tablero
+            const estado = document.getElementById('estado'); // Obtener el elemento de estado del juego
+            const reiniciarBtn = document.getElementById('reiniciarBtn'); // Obtener el botón de reiniciar
+            let jugadorActual = 'X'; // El jugador actual, empieza con X
+            let juegoActivo = true; // Indica si el juego está activo o no
+            let estadoTablero = ['', '', '', '', '', '', '', '', '']; // Estado inicial del tablero
+            const empate_audio = document.getElementById('empate_audio'); // Obtener el audio de empate
+            const seleccionarX_audio = document.getElementById('seleccionarX_audio'); // Obtener el audio de selección para X
+            const seleccionarO_audio = document.getElementById('seleccionarO_audio'); // Obtener el audio de selección para O
+
+            // Variables para los puntos
+            let puntosX = 0;
+            let puntosO = 0;
+            const marcadorX = document.getElementById('marcadorX');
+            const marcadorO = document.getElementById('marcadorO');
+            marcadorX.id = 'marcadorX';
+            marcadorO.id = 'marcadorO';
+            document.querySelector('.jugadorX').appendChild(marcadorX);
+            document.querySelector('.jugadorO').appendChild(marcadorO);
+            const actualizarMarcadores = () => {
+            marcadorX.innerText = puntosX;
+            marcadorO.innerText = puntosO;
+            };
+
+            // Función para reproducir el sonido correspondiente a la imagen del jugador
+            const reproducirSonido = (imagen) => {
+                const sonido = sonidos[imagen]; // Obtener el sonido correspondiente a la imagen
+                if (sonido) {
+                    const audio = new Audio(sonido); // Crear una nueva instancia de Audio con el sonido
+                    audio.play(); // Reproducir el sonido
+                }
+            };
+
+
+            const verificarGanador = () => {
+                const combinacionesGanadoras = [
+                [0, 1, 2], // Primera fila
+                [3, 4, 5], // Segunda fila
+                [6, 7, 8], // Tercera fila
+                [0, 3, 6], // Primera columna
+                [1, 4, 7], // Segunda columna
+                [2, 5, 8], // Tercera columna
+                [0, 4, 8], // Diagonal principal
+                [2, 4, 6]  // Diagonal secundaria
+                ];
+
+                for (let combinacion of combinacionesGanadoras) {
+                    const [a, b, c] = combinacion; // Desestructurar la combinación ganadora 
+
+                    if (estadoTablero[a] && estadoTablero[a] === estadoTablero[b] && estadoTablero[a] === estadoTablero[c]) {
+                        const ganador = estadoTablero[a]; // Obtener el valor del ganador ('X' o 'O')
+                        const rutaImagenGanador = ganador === 'X' ? jugadorX : jugadorO; // Seleccionar la URL de la imagen del ganador
+
+                        if (sonidos[rutaImagenGanador]) {
+                            const audioGanador = new Audio(sonidos[rutaImagenGanador]); // Seleccionar el sonido correspondiente al ganador
+                            audioGanador.play(); // Reproducir el sonido del ganador
+                        }
+
+                        // Incrementar puntos y actualizar marcadores
+                        if (ganador === 'X') {
+                            puntosX++;
+                        } else {
+                            puntosO++;
+                        }
+                        actualizarMarcadores();
+
+                        return ganador; // Retornar el ganador si hay uno
+                    }
+                }
+
+                return null; // Retorna null si no hay ganador
+            };
+
+            // Función para manejar el clic en una celda del tablero
+            const clic = (e) => {
+                const indiceCelda = parseInt(e.target.getAttribute('data-indice-celda')); // Obtener el índice de la celda clicada
+
+                // Verifica si la celda está vacía o si el juego ya terminó
+                if (estadoTablero[indiceCelda] !== '' || !juegoActivo) return;
+
+                // Registra el movimiento del jugador en el tablero
+                estadoTablero[indiceCelda] = jugadorActual;
+
+                // Crea una imagen para representar el movimiento del jugador
+                const imagen = document.createElement('img');
+                imagen.src = jugadorActual === 'X' ? './imagenes/x.png' : './imagenes/o.png'; // Asigna la imagen correspondiente al jugador
+                imagen.classList.add('imagen'); // Añade la clase de estilo 'imagen'
+                e.target.appendChild(imagen); // Añade la imagen a la celda clicada
+
+                // Reproduce el sonido correspondiente al jugador
+                if (jugadorActual === 'X') {
+                    seleccionarX_audio.play();
+                } else {
+                    seleccionarO_audio.play();
+                }
+
+                // Verifica si hay un ganador o empate
+                const ganador = verificarGanador();
+                const empate = verificarEmpate();
+                if (ganador) {
+                    const audioGanador = new Audio(sonidos[ganador]);
+                    audioGanador.play(); // Reproduce el sonido del ganador
+                } else if (empate) {
+                    empate_audio.play(); // Reproduce el sonido de empate
+                }
+
+                // Muestra el resultado del juego
+                if (ganador) {
+                    juegoActivo = false; // Detiene el juego
+                    estado.innerText = `¡El jugador ${ganador} ha ganado!`; // Muestra el mensaje de ganador
+                } else if (empate) {
+                    juegoActivo = false; // Detiene el juego
+                    estado.innerText = '¡Es un empate!'; // Muestra el mensaje de empate
+                } else {
+                    // Cambia al siguiente jugador
+                    jugadorActual = jugadorActual === 'X' ? 'O' : 'X';
+                    estado.innerText = `Turno del jugador ${jugadorActual}`; // Muestra el turno del siguiente jugador
+                }
+            };
+
+            // Función para verificar si hay un empate
+            const verificarEmpate = () => {
+                return estadoTablero.every(celda => celda !== ''); // Retorna true si todas las celdas están llenas
+            };
+
+            // Función para reiniciar el juego
+            const reiniciarJuego = () => {
+                jugadorActual = 'X';
+                juegoActivo = true;
+                estadoTablero = ['', '', '', '', '', '', '', '', '']; // Reinicia el tablero
+                estado.innerText = `Turno del jugador ${jugadorActual}`;
+                // Limpia el contenido de todas las celdas
+                tablero.querySelectorAll('.celda').forEach(celda => {
+                    celda.innerText = ''; // Elimina el texto dentro de la celda
+                    celda.innerHTML = ''; // Elimina el contenido HTML dentro de la celda
+                });
+            };
+
+            /// Agregar eventos de clic a las celdas del tablero
+            tablero.querySelectorAll('.celda').forEach(celda => {
+                celda.addEventListener('click', clic); // Asignar la función 'clic' a cada celda del tablero
+            });
+
+            // Agregar evento de clic al botón de reiniciar juego
+            reiniciarBtn.addEventListener('click', reiniciarJuego); // Asignar la función 'reiniciarJuego' al botón de reiniciar
+
+            // Obtener referencia al botón "Volver a la selección de personajes"
+            const volverBtn = document.getElementById('volverBtn');
+
+            // Agregar evento de clic al botón "Volver a la selección de personajes"
+            volverBtn.addEventListener('click', () => {
+                // Redirigir al usuario a la página de selección de personajes (seleccion.html)
+                window.location.href = 'seleccion.html';
+            });
+        });
+
+        //Función para controlar el audio de la música de fondo
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            backgroundMusic.volume = 0.2; // Ajusta el volumen a un nivel más bajo (20% del volumen máximo)
+        });
+
+    </script>
+
+<audio id="backgroundMusic" src="./sonidos/Fondo3.mp3" autoplay loop></audio>
+
+</body>
+
+</html>

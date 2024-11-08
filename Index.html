@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tres en Raya - Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+20&display=swap" rel="stylesheet">
+
+    <style>
+
+        html, body {
+            height: 100%; /* Establece la altura de la página al 100% del viewport */
+        }
+
+        body {
+            font-family: "Jersey 20", sans-serif; /* Fuente predeterminada del cuerpo del documento */
+            text-align: center; /* Alineación del texto al centro */
+            margin: 0; /* Elimina los márgenes externos */
+            padding: 0; /* Elimina los rellenos externos */
+            background-image: url("./imagenes/Fondo.gif"); /* Imagen de fondo del cuerpo */
+            background-size: cover; /* Escala la imagen de fondo para cubrir todo el cuerpo */
+            background-position: center; /* Posiciona la imagen de fondo en el centro */
+        }
+
+        h1 {
+            margin-top: 50px;
+            color: #ffffff; /* Color blanco para el encabezado */
+            font-size: 150px;
+        }
+
+        #iniciarJuegoBtn {
+            background-color: #4CAF50; /* Color de fondo del botón */
+            color: white; /* Color del texto del botón */
+            border: none; /* Sin borde en el botón */
+            padding: 15px 25px; /* Espaciado interno del botón */
+            font-size: 1.2em; /* Tamaño del texto del botón */
+            border-radius: 25px; /* Bordes redondeados del botón */
+            cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+            transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+            margin-top: 20px; /* Margen superior del botón */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor del botón */
+        }
+
+        #iniciarJuegoBtn:hover {
+            background-color: #45a049; /* Cambia el color de fondo al pasar el cursor sobre el botón */
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Bienvenido a Tres en Raya</h1>
+    <button id="iniciarJuegoBtn">Iniciar Juego</button> <!-- Botón para iniciar el juego -->
+    <audio id="backgroundMusic" src="./sonidos/Fondo.mp3" autoplay loop></audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            backgroundMusic.volume = 0.2; // Ajusta el volumen a un nivel más bajo (20% del volumen máximo)
+            
+        document.getElementById('iniciarJuegoBtn').addEventListener('click', function () { // Evento de clic en el botón
+            window.location.href = 'Seleccion.html'; <!-- Redirecciona al usuario a la página del juego -->
+        });
+    });
+    </script>
+
+</body> 
+
+</html>

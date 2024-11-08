@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tres en Raya - Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+20&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* Establece la altura del HTML y el cuerpo al 100% de la ventana */
+
+        html, 
+        body {
+            height: 100%;
+        }
+
+    
+        body {
+            font-family: "Jersey 20", sans-serif; /* Fuente de texto */
+            text-align: center; /* Alineación del texto */
+            margin: 0; /* Elimina los márgenes */
+            padding: 0; /* Elimina el relleno */
+            background-image: url("./imagenes/Fondo.gif"); /* Establece la imagen de fondo */
+            background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
+            background-position: center; /* Centra la imagen de fondo */
+        }
+
+        h1 {
+            margin-top: 50px;
+            color: #ffffff; /* Color del texto*/
+            font-size: 50px;
+        }
+
+        /* Estilos para las selecciones de personajes */
+
+        .seleccion {
+            display: inline-block; /* Muestra los elementos en línea con el bloque de alineación */
+            width: 250px; /* Ancho de la selección */
+            height: 250px; /* Altura de la selección */
+            border: 2px solid #aaa; /* Tipo de borde y color */
+            margin: 25px; /* Margen exterior de 25px */
+            cursor: pointer; /* Cursor al pasar por encima */
+            background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la selección */
+            background-position: center; /* Centra la imagen de fondo */
+            margin-top: 150px; /* Margen superior de 150px */
+        }
+
+        /* Estilos para la selección de personajes seleccionada */
+
+        .seleccion.selected {
+            border-color: blue; /* Cambia el color del borde cuando está seleccionado */
+        }
+
+        /* Estilos para el botón de confirmar */
+
+        #confirmarBtn {
+            background-color: #4CAF50; /* Color de fondo*/
+            color: white; /* Color del texto */
+            border: none; /* Sin borde */
+            padding: 15px 25px; /* Espaciado interno */
+            font-size: 1.2em; /* Tamaño del texto */
+            border-radius: 25px; /* Bordes redondeados */
+            cursor: pointer; /* Cursor al pasar por encima */
+            transition: background-color 0.3s ease; /* Transición suave */
+            margin-top: 20px; /* Margen superior de 20px */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        /* Estilos para el botón de confirmar cuando se pasa el cursor sobre él */
+
+        #confirmarBtn:hover {
+            background-color: #45a049; /* Color de fondo al pasar el cursor */
+        }
+
+    </style>
+</head>
+
+<body>
+    <div style="display: flex; align-items: center; justify-content: center;"> <!-- Div para la frase con gifs -->
+        <img src="./imagenes/letraX.gif" alt="GIF animado 1" id="gifJugadorX1" style="margin-right: 10px; width: 50px; height: 50px;"> <!-- Primer gif -->
+        <h1 style="margin: 0 20px;">Jugador <span id="jugadorActual">X</span>, selecciona y confirma un Personaje:</h1> <!-- Frase -->
+        <img src="./imagenes/letraX.gif" alt="GIF animado 2" id="gifJugadorX2" style="margin-right: 10px; width: 50px; height: 50px;"> <!-- Segundo gif -->
+    </div>    
+           
+<div class="seleccion" id="opcion1" data-sonido="./sonidos/venidapormi.mp3" data-imagen="./imagenes/venidapormi.jpg"
+    style="background-image: url('./imagenes/venidapormi.jpg')"></div> <!-- Personaje 1 con datos de sonido e imagen -->
+<div class="seleccion" id="opcion2" data-sonido="./sonidos/churumbel.mp3" data-imagen="./imagenes/churumbel.jpg"
+    style="background-image: url('./imagenes/churumbel.jpg')"></div> <!-- Personaje 2 con datos de sonido e imagen -->
+<div class="seleccion" id="opcion3" data-sonido="./sonidos/pimpam.mp3" data-imagen="./imagenes/pimpam.jpg"
+    style="background-image: url('./imagenes/pimpam.jpg')"></div> <!-- Personaje 3 con datos de sonido e imagen -->
+<div class="seleccion" id="opcion4" data-sonido="./sonidos/jovani.mp3" data-imagen="./imagenes/jovani.jpg"
+    style="background-image: url('./imagenes/jovani.jpg')"></div> <!-- Personaje 4 con datos de sonido e imagen -->
+<div class="seleccion" id="opcion5" data-sonido="./sonidos/skippy.mp3" data-imagen="./imagenes/skippy.jpg"
+    style="background-image: url('./imagenes/skippy.jpg')"></div> <!-- Personaje 5 con datos de sonido e imagen -->
+<br> <!-- Salto de línea -->
+<button id="confirmarBtn">Confirmar selección</button> <!-- Botón para confirmar la selección -->
+
+<!-- Elemento de audio -->
+<audio id="sound" src=""></audio>
+
+
+<script>
+    let jugadorActual = 'X'; // Variable para almacenar el jugador actual, comienza con X
+    let seleccionX = ''; // Variable para almacenar la selección del jugador X
+    let seleccionO = ''; // Variable para almacenar la selección del jugador O
+    let confirmaciones = 0; // Contador para controlar el número de confirmaciones
+
+    // Función para reproducir un sonido
+    const playSound = (sonido) => {
+        const sound = document.getElementById('sound'); // Obtener el elemento de audio
+        sound.src = sonido; // Establecer la fuente de audio
+        sound.currentTime = 0; // Reiniciar el audio
+        sound.play(); // Reproducir el audio
+    };
+
+    // Agregar un evento de clic a cada elemento con la clase 'seleccion'
+    document.querySelectorAll('.seleccion').forEach(item => {
+        item.addEventListener('click', () => {
+            if (confirmaciones === 0 && jugadorActual === 'X') {
+                // Si es el turno del jugador X y no se han confirmado ambas selecciones
+                document.querySelectorAll('.seleccion').forEach(item => {
+                    item.classList.remove('selected'); // Eliminar la clase 'selected' de todos los elementos 'seleccion'
+                });
+                item.classList.add('selected'); // Agregar la clase 'selected' al elemento clickeado
+                seleccionX = item.getAttribute('data-imagen'); // Obtener la URL de la imagen seleccionada por el jugador X
+                playSound(item.getAttribute('data-sonido')); // Reproducir el sonido asociado a la selección
+            } else if (confirmaciones === 1 && jugadorActual === 'O') {
+                // Si es el turno del jugador O y se han confirmado las selecciones de ambos jugadores
+                document.querySelectorAll('.seleccion').forEach(item => {
+                    item.classList.remove('selected'); // Eliminar la clase 'selected' de todos los elementos 'seleccion'
+                });
+                item.classList.add('selected'); // Agregar la clase 'selected' al elemento clickeado
+                seleccionO = item.getAttribute('data-imagen'); // Obtener la URL de la imagen seleccionada por el jugador O
+                playSound(item.getAttribute('data-sonido')); // Reproducir el sonido asociado a la selección
+            }
+        });
+    });
+
+    // Agregar un evento de clic al botón de confirmación
+    document.getElementById('confirmarBtn').addEventListener('click', () => {
+        if (confirmaciones === 0 && seleccionX) {
+            // Si es el primer jugador y ha seleccionado una imagen
+            confirmaciones++; // Incrementar el contador de confirmaciones
+            cambiarJugador(); // Cambiar al siguiente jugador
+            document.getElementById('gifJugadorX1').src = './imagenes/circulo.gif';
+            document.getElementById('gifJugadorX2').src = './imagenes/circulo.gif';
+        } else if (confirmaciones === 1 && seleccionO) {
+            // Si es el segundo jugador y ha seleccionado una imagen
+            // Redireccionar al juego con las selecciones de los jugadores como parámetros de consulta en la URL
+            window.location.href = `juego.html?jugadorX=${encodeURIComponent(seleccionX)}&jugadorO=${encodeURIComponent(seleccionO)}`;
+        } else {
+            alert('Ambos jugadores deben seleccionar y confirmar una opción antes de continuar.'); // Mostrar un mensaje de alerta si no se cumplen las condiciones anteriores
+        }
+    });
+
+    // Función para cambiar al siguiente jugador
+    const cambiarJugador = () => {
+        jugadorActual = jugadorActual === 'X' ? 'O' : 'X'; // Cambiar al siguiente jugador
+        document.getElementById('jugadorActual').textContent = jugadorActual; // Actualizar el texto del jugador actual en el HTML
+    };
+
+    //Función para controlar el audio de la música de fondo
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            backgroundMusic.volume = 0.2; // Ajusta el volumen a un nivel más bajo (20% del volumen máximo)
+        });
+
+    
+
+</script>
+
+<audio id="backgroundMusic" src="./sonidos/Fondo.mp3" autoplay loop></audio>
+
+</body>
+
+</html>
